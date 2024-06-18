@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:modernlogintute/pages/login_screen.dart';
+import 'package:modernlogintute/screens/login_screen.dart';
 import 'home_screen.dart';
 
 class AuthControllerScreen extends StatelessWidget {

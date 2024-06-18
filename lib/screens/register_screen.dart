@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:modernlogintute/authentication_provider.dart';
 import 'package:modernlogintute/components/my_button.dart';
-import 'package:modernlogintute/components/my_textfield.dart';
+import 'package:modernlogintute/components/custom_text_form_field.dart';
 import 'package:modernlogintute/components/square_tile.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -116,7 +116,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 const SizedBox(height: 25),
 
                 // email textfield
-                MyTextField(
+                CustomTextFormField(
                   controller: emailController,
                   hintText: 'Email',
                   obscureText: false,
@@ -125,7 +125,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 const SizedBox(height: 10),
 
                 // password textfield
-                MyTextField(
+                CustomTextFormField(
                   controller: passwordController,
                   hintText: 'Password',
                   obscureText: true,
@@ -134,7 +134,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 const SizedBox(height: 10),
 
                 // repeat password textfield
-                MyTextField(
+                CustomTextFormField(
                   controller: repeatPasswordController,
                   hintText: 'Confirm Password',
                   obscureText: true,

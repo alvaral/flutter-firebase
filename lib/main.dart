@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:modernlogintute/authentication_provider.dart';
-import 'package:modernlogintute/pages/auth_controller.dart';
+import 'package:modernlogintute/screens/auth_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:modernlogintute/pages/home_screen.dart';
-import 'package:modernlogintute/pages/login_screen.dart';
-import 'package:modernlogintute/pages/register_screen.dart';
+import 'package:modernlogintute/screens/home_screen.dart';
+import 'package:modernlogintute/screens/login_screen.dart';
+import 'package:modernlogintute/screens/register_screen.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
 
 Map<String, Widget Function(BuildContext)> routes = {
   '/': (context) => const AuthControllerScreen(),
-  '/login': (context) => LoginScreen(),
+  '/login': (context) => const LoginScreen(),
   '/register': (context) => const RegisterScreen(),
   '/home': (context) => const HomePage(),
 };

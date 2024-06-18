@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:modernlogintute/authentication_provider.dart';
-import 'package:modernlogintute/pages/auth_controller.dart';
+import 'package:modernlogintute/screens/auth_controller.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
