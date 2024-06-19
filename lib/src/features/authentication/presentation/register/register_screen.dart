@@ -1,27 +1,29 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:modernlogintute/src/features/authentication/presentation/login_screen_controller.dart';
 
-import 'package:modernlogintute/authentication_provider.dart';
-import 'package:modernlogintute/components/my_button.dart';
-import 'package:modernlogintute/components/custom_text_form_field.dart';
-import 'package:modernlogintute/components/square_tile.dart';
+import 'package:modernlogintute/src/components/my_button.dart';
+import 'package:modernlogintute/src/components/custom_text_form_field.dart';
+import 'package:modernlogintute/src/components/square_tile.dart';
 
-class RegisterScreen extends StatefulWidget {
+class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  ConsumerState<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   // text editing controllers
   final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
+
   final repeatPasswordController = TextEditingController();
 
   // sign user in method
-  void signUserUp(AuthenticationProvider authenticationProvider) async {
+  void signUserUp() async {
     if (emailController.text == '' ||
         passwordController.text == '' ||
         repeatPasswordController.text == '') {
@@ -45,10 +47,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
       },
     );
 
+    final authenticationController =
+        ref.read(authenticationControllerProvider.notifier);
+
     // try sign up
     try {
-      await authenticationProvider.signUp(
-          emailController.text, passwordController.text);
+      await authenticationController.register(
+          email: emailController.text, password: passwordController.text);
       // pop the loading circle
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
@@ -85,7 +90,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authenticationProvider = Provider.of<AuthenticationProvider>(context);
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(
@@ -145,7 +149,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 // register button
                 MyButton(
                   text: 'Sign up',
-                  onTap: () => signUserUp(authenticationProvider),
+                  onTap: () => signUserUp(),
                 ),
 
                 const SizedBox(height: 50),

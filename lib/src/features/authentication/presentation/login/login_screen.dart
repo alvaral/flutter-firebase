@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:modernlogintute/utils/validators.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:modernlogintute/src/features/authentication/presentation/login_screen_controller.dart';
+import 'package:modernlogintute/src/utils/validators.dart';
 
-import 'package:modernlogintute/authentication_provider.dart';
-import 'package:modernlogintute/components/my_button.dart';
-import 'package:modernlogintute/components/custom_text_form_field.dart';
+import 'package:modernlogintute/src/components/my_button.dart';
+import 'package:modernlogintute/src/components/custom_text_form_field.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   // text editing controllers
@@ -21,9 +21,10 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordController = TextEditingController();
 
   // sign user in method
-  void signUserIn(AuthenticationProvider authenticationProvider) async {
+  void signUserIn() async {
+    final authenticationController =
+        ref.read(authenticationControllerProvider.notifier);
     if (_formKey.currentState!.validate()) {
-      // show loading circle
       showDialog(
         context: context,
         builder: (context) {
@@ -35,14 +36,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
       // try sign in
       try {
-        await authenticationProvider.signIn(
-            emailController.text, passwordController.text);
-        // pop the loading circle
+        await authenticationController.login(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
       } catch (e) {
-        // pop the loading circle
-        // ignore: use_build_context_synchronously
         Navigator.pop(context);
         // WRONG EMAIL
         showErrorMessage(e.toString());
@@ -70,9 +71,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authenticationProvider =
-        Provider.of<AuthenticationProvider>(context, listen: false);
-
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(
@@ -143,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   // sign in button
                   MyButton(
                     text: 'Sign in',
-                    onTap: () => signUserIn(authenticationProvider),
+                    onTap: () => signUserIn(),
                   ),
 
                   const SizedBox(height: 50),
